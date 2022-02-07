@@ -1,12 +1,17 @@
-import {Alert, Button, SafeAreaView, StyleSheet, TextInput} from 'react-native';
+import {
+  Alert,
+  Button,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+  Text,
+} from 'react-native';
 import React, {useState} from 'react';
 
-
-
 export default function App() {
-  const [number1, setNumber1] = useState(0);
-  const [number2, setNumber2] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [number1, setNumber1] = useState();
+  const [number2, setNumber2] = useState();
+  const [total, setTotal] = useState();
 
   function addTogether() {
     const newTotal = number1 + number2;
@@ -28,7 +33,9 @@ export default function App() {
     setTotal(newTotal);
     Alert.alert('Answer', 'Division: ' + newTotal); // total has the old value in the render
   }
-
+  if (number1 == 0 && number2 == 0) {
+    return <Text>Input is 0</Text>;
+  }
   return (
     <SafeAreaView style={styles.container}>
       <TextInput
