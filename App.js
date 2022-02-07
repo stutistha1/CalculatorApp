@@ -1,12 +1,6 @@
-import {
-  Alert,
-  Button,
-  SafeAreaView,
-  StyleSheet,
-  TextInput,
-  Text,
-} from 'react-native';
+import {Alert, Button, SafeAreaView, StyleSheet, TextInput} from 'react-native';
 import React, {useState} from 'react';
+
 
 export default function App() {
   const [number1, setNumber1] = useState();
