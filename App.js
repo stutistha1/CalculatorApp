@@ -33,8 +33,14 @@ export default function App() {
     setTotal(newTotal);
     Alert.alert('Answer', 'Division: ' + newTotal); // total has the old value in the render
   }
+  if (total > 0) {
+    Alert.alert('Positive Value');
+  }
+  if (total < 0) {
+    Alert.alert('Negative Value');
+  }
   if (number1 == 0 && number2 == 0) {
-    return <Text>Input is 0</Text>;
+    Alert.alert('The input is 0');
   }
   return (
     <SafeAreaView style={styles.container}>
