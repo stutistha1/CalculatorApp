@@ -1,49 +1,45 @@
-import {Alert, Button, SafeAreaView, StyleSheet, TextInput} from 'react-native';
-import React, {useState} from 'react';
+import {Text, Button, SafeAreaView, StyleSheet, TextInput} from 'react-native';
+import React, {useEffect, useState} from 'react';
+
 
 
 export default function App() {
   const [number1, setNumber1] = useState();
   const [number2, setNumber2] = useState();
-  const [total, setTotal] = useState();
+  const [add, setAdd] = useState();
+  const [sub, setSub] = useState();
+  const [multiply, setMultiply] = useState();
+  const [divide, setDivide] = useState();
 
-  function addTogether() {
-    const newTotal = number1 + number2;
-    setTotal(newTotal);
-    Alert.alert('Answer', 'Addition: ' + newTotal); // total has the old value in the render
-  }
-  function subtract() {
-    const newTotal = number1 - number2;
-    setTotal(newTotal);
-    Alert.alert('Answer', 'Subtraction: ' + newTotal); // total has the old value in the render
-  }
-  function multiply() {
-    const newTotal = number1 * number2;
-    setTotal(newTotal);
-    Alert.alert('Answer', 'Multiplication: ' + newTotal); // total has the old value in the render
-  }
-  function divide() {
-    const newTotal = number1 / number2;
-    setTotal(newTotal);
-    Alert.alert('Answer', 'Division: ' + newTotal); // total has the old value in the render
-  }
-  if (total > 0) {
-    Alert.alert('Positive Value');
-  }
-  if (total < 0) {
-    Alert.alert('Negative Value');
-  }
-  if (number1 == 0 && number2 == 0) {
-    Alert.alert('The input is 0');
-  }
+  
+  useEffect(() => {
+    setAdd(number1+number2)
+    setSub(number1-number2)
+    setMultiply(number1*number2)
+    setDivide(number1/number2),
+    [number1,number2]
+  });
+
+
+  const clear = () => {
+    setNumber1();
+    setNumber2();
+    setAdd();
+    setSub();
+    setMultiply();
+    setDivide();
+  };
+
+
   return (
     <SafeAreaView style={styles.container}>
+      
       <TextInput
         style={styles.input}
         onChangeText={v => {
           setNumber1(Number.parseInt(v)); // Use parsed value from onChangeText
         }}
-        placeholder="0"
+        placeholder="Enter First Number"
         keyboardType="numeric"
       />
       <TextInput
@@ -51,22 +47,40 @@ export default function App() {
         onChange={e => {
           setNumber2(Number.parseInt(e.nativeEvent.text)); // or get correct value from nativeEvent onChange
         }}
-        placeholder="0"
+        placeholder="Enter Second Number"
         keyboardType="numeric"
       />
 
-      <Button onPress={addTogether} title="Add" />
-      <Button onPress={subtract} title="Subtract" />
-      <Button onPress={multiply} title="Multiply" />
-      <Button onPress={divide} title="Divide" />
+      <Text style={styles.text}>Addition: {add} </Text>
+      <Text style={styles.text}>Subtraction: {sub} </Text>
+      <Text style={styles.text}>Multiplication: {multiply} </Text>
+      <Text style={styles.text}>Division: {divide} </Text>
+
+      <Button onPress={clear} title = "Clear" />
+      
+      
+      {number1 === 0 && number2 === 0 ? (
+        <Text style={styles.text}>Both inputs are 0</Text>
+      ) : (
+        <Text>{null}</Text>
+      )}
+      {add < 0 && sub < 0 && multiply <0 && divide < 0 ? (
+        <Text style={styles.text}>The outputs are negative</Text>
+      ) : add > 0 && sub > 0 && multiply > 0 && divide >0 ? (
+        <Text style={styles.text}>The outputs are positive</Text>
+      ) : (
+        <Text>{null}</Text>
+      )}
+
+    
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.7,
-    backgroundColor: '#fff',
+    flex: 1,
+    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'space-evenly',
   },
@@ -75,5 +89,14 @@ const styles = StyleSheet.create({
     width: 300,
     borderWidth: 2,
     padding: 10,
+    fontSize:20,
+    fontWeight: 'bold',
+    color: 'black',
   },
+  text: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: 'black'
+  }
 });
+
